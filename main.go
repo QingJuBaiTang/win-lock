@@ -180,7 +180,7 @@ func startApp() {
 		return
 	}
 
-	desk.SetSystemTrayIcon(theme.ComputerIcon())
+	desk.SetSystemTrayIcon(makeTrayIcon())
 	desk.SetSystemTrayMenu(fyne.NewMenu("ClassLock",
 		fyne.NewMenuItem("Lock Screen", showLockScreen),
 		fyne.NewMenuItemSeparator(),

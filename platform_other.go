@@ -8,6 +8,8 @@ import "fyne.io/fyne/v2"
 
 func installPlatformHooks(_ fyne.Window) {}
 
+func showOnScreenKeyboard() {}
+
 func uninstallPlatformHooks() {}
 
 func bringToFront() {

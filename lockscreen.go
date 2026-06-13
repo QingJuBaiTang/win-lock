@@ -62,6 +62,10 @@ func showLockScreen() {
 	unlockBtn.Importance = widget.HighImportance
 	passEntry.OnSubmitted = func(_ string) { unlockFn() }
 
+	kbBtn := widget.NewButton("Keyboard", func() {
+		showOnScreenKeyboard()
+	})
+
 	entryWrap := container.New(layout.NewGridWrapLayout(fyne.NewSize(300, 40)), passEntry)
 
 	panel := container.NewVBox(
@@ -72,7 +76,7 @@ func showLockScreen() {
 		widget.NewSeparator(),
 		entryWrap,
 		errText,
-		container.NewCenter(unlockBtn),
+		container.NewCenter(container.NewHBox(unlockBtn, kbBtn)),
 	)
 
 	content := container.NewStack(

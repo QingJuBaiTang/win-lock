@@ -3,6 +3,7 @@
 package main
 
 import (
+	"os/exec"
 	"runtime"
 	"sync/atomic"
 	"syscall"
@@ -115,6 +116,10 @@ func uninstallPlatformHooks() {
 		procPostThreadMessage.Call(uintptr(tid), wmQuit, 0, 0)
 		atomic.StoreUint32(&hookThreadID, 0)
 	}
+}
+
+func showOnScreenKeyboard() {
+	exec.Command("osk.exe").Start()
 }
 
 func bringToFront() {
