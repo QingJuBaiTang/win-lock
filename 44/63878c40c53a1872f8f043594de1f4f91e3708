@@ -1,0 +1,27 @@
+platform_other.go
+  s_b9c3f266c7a04b::t_9bf2c882f336a8 11-13
+lockscreen.go
+  s_b9c3f266c7a04b::t_3788e56aa29281 64-66,69
+main.go
+  s_b9c3f266c7a04b::t_203fdecc4b2460 44,46
+  s_b9c3f266c7a04b::t_66e5542d684bc5 184-201,206,214,220-238,244
+platform_windows.go
+  s_b9c3f266c7a04b::t_a6a360aac0512c 139
+  s_b9c3f266c7a04b::t_290ef610f4b169 151-160
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "4463878c40c53a1872f8f043594de1f4f91e3708",
+  "prompts": {},
+  "sessions": {
+    "s_b9c3f266c7a04b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9d293ad-67a5-4d56-993d-8e729b34b246",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "baitang <baidi@tsign.cn>"
+    }
+  }
+}
