@@ -1,0 +1,19 @@
+.github/workflows/build-windows.yml
+  s_b9c3f266c7a04b::t_5e548c378de2a9 18
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "5d89a00ca6473eaf8089491906f64b646baae17b",
+  "prompts": {},
+  "sessions": {
+    "s_b9c3f266c7a04b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9d293ad-67a5-4d56-993d-8e729b34b246",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "baitang <baidi@tsign.cn>"
+    }
+  }
+}
