@@ -1,0 +1,34 @@
+lockscreen.go
+  s_b9c3f266c7a04b::t_cb614ed6d9e2d4 31,36,62-73,75,77,83-84,89-92
+keyboard.go
+  s_b9c3f266c7a04b::t_36e2dced839e6b 1-12,14-18,20-61,64-88,90-93,95-110
+  s_b9c3f266c7a04b::t_944594f47de855 13,19,62
+  s_b9c3f266c7a04b::t_9639b2ecb8753e 89,94
+  s_b9c3f266c7a04b::t_9ec2a88fdde589 63
+main.go
+  s_b9c3f266c7a04b::t_21a065abd5d81b 45
+  s_b9c3f266c7a04b::t_991ee247e801d0 106,109
+platform_other.go
+  s_b9c3f266c7a04b::t_65125d40016143 8-9,11-12
+platform_windows.go
+  s_b9c3f266c7a04b::t_911f91a1f5c48f 127-150
+  s_b9c3f266c7a04b::t_9629e8b4dee687 6,15
+go.mod
+  s_b9c3f266c7a04b::t_ae0ff4868bdea5 8
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "9fe72be731005f570a945c7aea37a5108fa16aa8",
+  "prompts": {},
+  "sessions": {
+    "s_b9c3f266c7a04b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9d293ad-67a5-4d56-993d-8e729b34b246",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "baitang <baidi@tsign.cn>"
+    }
+  }
+}
