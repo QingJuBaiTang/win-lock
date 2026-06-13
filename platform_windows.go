@@ -3,6 +3,7 @@
 package main
 
 import (
+	"os"
 	"os/exec"
 	"runtime"
 	"sync/atomic"
@@ -11,6 +12,7 @@ import (
 	"unsafe"
 
 	"fyne.io/fyne/v2"
+	"golang.org/x/sys/windows/registry"
 )
 
 var (
@@ -120,6 +122,30 @@ func uninstallPlatformHooks() {
 
 func showOnScreenKeyboard() {
 	exec.Command("osk.exe").Start()
+}
+
+const runKey = `Software\Microsoft\Windows\CurrentVersion\Run`
+
+func setupAutoStart() error {
+	exe, err := os.Executable()
+	if err != nil {
+		return err
+	}
+	k, err := registry.OpenKey(registry.CURRENT_USER, runKey, registry.SET_VALUE)
+	if err != nil {
+		return err
+	}
+	defer k.Close()
+	return k.SetStringValue("ClassLock", exe)
+}
+
+func removeAutoStart() error {
+	k, err := registry.OpenKey(registry.CURRENT_USER, runKey, registry.SET_VALUE)
+	if err != nil {
+		return err
+	}
+	defer k.Close()
+	return k.DeleteValue("ClassLock")
 }
 
 func bringToFront() {

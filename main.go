@@ -42,6 +42,7 @@ func main() {
 		showFirstRunSetup()
 	} else {
 		startApp()
+		showLockScreen() // 每次启动直接锁屏
 	}
 
 	fyneApp.Run()
@@ -102,8 +103,10 @@ func showFirstRunSetup() {
 			errLbl.SetText("Save failed: " + err.Error())
 			return
 		}
+		setupAutoStart()
 		w.Close()
 		startApp()
+		showLockScreen()
 	})
 	btn.Importance = widget.HighImportance
 

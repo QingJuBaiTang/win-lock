@@ -11,7 +11,6 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-// lockWindowTitle is used by the Windows platform hook to find the HWND by title.
 const lockWindowTitle = "ClassLock-LOCK"
 
 var lockWin fyne.Window
@@ -29,12 +28,12 @@ func showLockScreen() {
 	bg := canvas.NewRectangle(color.NRGBA{R: 10, G: 15, B: 35, A: 255})
 
 	timeText := canvas.NewText(time.Now().Format("15:04"), color.White)
-	timeText.TextSize = 80
+	timeText.TextSize = 72
 	timeText.Alignment = fyne.TextAlignCenter
 	timeText.TextStyle = fyne.TextStyle{Bold: true}
 
 	dateText := canvas.NewText(formatDate(time.Now()), color.NRGBA{R: 170, G: 178, B: 200, A: 255})
-	dateText.TextSize = 22
+	dateText.TextSize = 20
 	dateText.Alignment = fyne.TextAlignCenter
 
 	hint := canvas.NewText("Screen locked  -  Enter password to unlock", color.NRGBA{R: 110, G: 120, B: 150, A: 255})
@@ -58,30 +57,39 @@ func showLockScreen() {
 		}
 	}
 
-	unlockBtn := widget.NewButton("Unlock", unlockFn)
-	unlockBtn.Importance = widget.HighImportance
 	passEntry.OnSubmitted = func(_ string) { unlockFn() }
 
-	kbBtn := widget.NewButton("Keyboard", func() {
-		showOnScreenKeyboard()
-	})
+	kb := buildKeyboard(
+		func(s string) {
+			passEntry.SetText(passEntry.Text + s)
+		},
+		func() {
+			r := []rune(passEntry.Text)
+			if len(r) > 0 {
+				passEntry.SetText(string(r[:len(r)-1]))
+			}
+		},
+		unlockFn,
+	)
 
-	entryWrap := container.New(layout.NewGridWrapLayout(fyne.NewSize(300, 40)), passEntry)
+	entryWrap := container.New(layout.NewGridWrapLayout(fyne.NewSize(320, 42)), passEntry)
 
-	panel := container.NewVBox(
+	top := container.NewVBox(
 		timeText,
 		dateText,
 		widget.NewSeparator(),
 		hint,
 		widget.NewSeparator(),
-		entryWrap,
-		errText,
-		container.NewCenter(container.NewHBox(unlockBtn, kbBtn)),
+		container.NewCenter(entryWrap),
+		container.NewCenter(errText),
 	)
 
 	content := container.NewStack(
 		bg,
-		container.NewCenter(panel),
+		container.NewBorder(
+			nil, container.NewCenter(kb), nil, nil,
+			container.NewCenter(top),
+		),
 	)
 
 	w.SetContent(content)
