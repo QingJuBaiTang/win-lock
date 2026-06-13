@@ -1,0 +1,32 @@
+.github/workflows/build-windows.yml
+  s_b9c3f266c7a04b::t_3df1d8a11a262a 19-20
+icon.go
+  s_b9c3f266c7a04b::t_bd238208d4283a 1-53
+main.go
+  s_b9c3f266c7a04b::t_95a13a8a47bdf3 183
+platform_other.go
+  s_b9c3f266c7a04b::t_1760b4365ba884 11-12
+lockscreen.go
+  s_b9c3f266c7a04b::t_1b3a6706fd406c 65-68,79
+.gitignore
+  s_b9c3f266c7a04b::t_29e13639627fdf 1-3
+platform_windows.go
+  s_b9c3f266c7a04b::t_b7bb0c67fa356e 6
+  s_b9c3f266c7a04b::t_997164c278dc5e 121-124
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.6",
+  "base_commit_sha": "1091c80ee82acc1f27b7090678c8180b4cd77c4f",
+  "prompts": {},
+  "sessions": {
+    "s_b9c3f266c7a04b": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "d9d293ad-67a5-4d56-993d-8e729b34b246",
+        "model": "claude-sonnet-4-6"
+      },
+      "human_author": "baitang <baidi@tsign.cn>"
+    }
+  }
+}
