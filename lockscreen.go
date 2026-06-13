@@ -61,13 +61,12 @@ func showLockScreen() {
 
 	kb := buildKeyboard(
 		func(s string) {
-			passEntry.SetText(passEntry.Text + s)
+			for _, r := range s {
+				passEntry.TypedRune(r)
+			}
 		},
 		func() {
-			r := []rune(passEntry.Text)
-			if len(r) > 0 {
-				passEntry.SetText(string(r[:len(r)-1]))
-			}
+			passEntry.TypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace})
 		},
 		unlockFn,
 	)

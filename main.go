@@ -41,8 +41,9 @@ func main() {
 	if cfg.PasswordHash == "" {
 		showFirstRunSetup()
 	} else {
+		setupAutoStart() // 每次启动刷新注册表，确保路径始终正确
 		startApp()
-		showLockScreen() // 每次启动直接锁屏
+		showLockScreen()
 	}
 
 	fyneApp.Run()
@@ -170,24 +171,39 @@ func showChangePassword() {
 }
 
 func startApp() {
-	// System tray only works reliably on Windows with a proper binary.
-	// On macOS/Linux, show a small control window instead.
 	if runtime.GOOS != "windows" {
 		showFallbackWindow()
 		return
 	}
-
 	desk, ok := fyneApp.(desktop.App)
 	if !ok {
 		showFallbackWindow()
 		return
 	}
-
 	desk.SetSystemTrayIcon(makeTrayIcon())
+	refreshTrayMenu(desk)
+}
+
+// refreshTrayMenu rebuilds the tray menu so the auto-start item reflects current state.
+func refreshTrayMenu(desk desktop.App) {
+	var autoStartItem *fyne.MenuItem
+	if isAutoStartEnabled() {
+		autoStartItem = fyne.NewMenuItem("Disable Auto-start", func() {
+			removeAutoStart()
+			refreshTrayMenu(desk)
+		})
+	} else {
+		autoStartItem = fyne.NewMenuItem("Enable Auto-start", func() {
+			setupAutoStart()
+			refreshTrayMenu(desk)
+		})
+	}
+
 	desk.SetSystemTrayMenu(fyne.NewMenu("ClassLock",
 		fyne.NewMenuItem("Lock Screen", showLockScreen),
 		fyne.NewMenuItemSeparator(),
 		fyne.NewMenuItem("Change Password", showChangePassword),
+		autoStartItem,
 		fyne.NewMenuItemSeparator(),
 		fyne.NewMenuItem("Quit", fyneApp.Quit),
 	))
@@ -195,17 +211,37 @@ func startApp() {
 
 func showFallbackWindow() {
 	w := fyneApp.NewWindow("ClassLock")
-	w.Resize(fyne.NewSize(280, 170))
+	w.Resize(fyne.NewSize(280, 220))
 	w.CenterOnScreen()
 
 	lockBtn := widget.NewButton("Lock Screen", showLockScreen)
 	lockBtn.Importance = widget.HighImportance
+
+	// Auto-start toggle button (label updates on click)
+	var autoBtn *widget.Button
+	refreshAutoBtn := func() {
+		if isAutoStartEnabled() {
+			autoBtn.SetText("Disable Auto-start")
+		} else {
+			autoBtn.SetText("Enable Auto-start")
+		}
+	}
+	autoBtn = widget.NewButton("", func() {
+		if isAutoStartEnabled() {
+			removeAutoStart()
+		} else {
+			setupAutoStart()
+		}
+		refreshAutoBtn()
+	})
+	refreshAutoBtn()
 
 	w.SetContent(container.NewVBox(
 		widget.NewLabelWithStyle("ClassLock", fyne.TextAlignCenter, fyne.TextStyle{Bold: true}),
 		widget.NewSeparator(),
 		lockBtn,
 		widget.NewButton("Change Password", showChangePassword),
+		autoBtn,
 	))
 	w.SetCloseIntercept(func() { fyneApp.Quit() })
 	w.Show()

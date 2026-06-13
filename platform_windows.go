@@ -136,7 +136,7 @@ func setupAutoStart() error {
 		return err
 	}
 	defer k.Close()
-	return k.SetStringValue("ClassLock", exe)
+	return k.SetStringValue("ClassLock", `"`+exe+`"`)
 }
 
 func removeAutoStart() error {
@@ -146,6 +146,16 @@ func removeAutoStart() error {
 	}
 	defer k.Close()
 	return k.DeleteValue("ClassLock")
+}
+
+func isAutoStartEnabled() bool {
+	k, err := registry.OpenKey(registry.CURRENT_USER, runKey, registry.QUERY_VALUE)
+	if err != nil {
+		return false
+	}
+	defer k.Close()
+	_, _, err = k.GetStringValue("ClassLock")
+	return err == nil
 }
 
 func bringToFront() {
